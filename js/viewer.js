@@ -8,7 +8,7 @@
     exhibitionStage:$('#exhibitionStage'), exhibitionGrid:$('#exhibitionGrid'), exhibitionViewModes:$('#exhibitionViewModes'), exhibitionSpace:$('#exhibitionSpace'), exhibitionSpaceScene:$('.exhibition-space-scene'), exhibitionSpaceTrack:$('#exhibitionSpaceTrack'), exhibitionSpaceLabel:$('#exhibitionSpaceLabel'), exhibitionCameraControls:$('#exhibitionCameraControls'), exhibitionCameraSlider:$('#exhibitionCameraSlider'), exhibitionCameraOutput:$('#exhibitionCameraOutput'), exhibitionCameraResetBtn:$('#exhibitionCameraResetBtn'), exhibitionCompareBtn:$('#exhibitionCompareBtn'), exhibitionExplainBtn:$('#exhibitionExplainBtn'), exhibitionMediaBtn:$('#exhibitionMediaBtn'),
     groupStage:$('#groupStage'), groupGrid:$('#groupGrid'), groupRangeButtons:$('#groupRangeButtons'), groupExitBtn:$('#groupExitBtn'), groupCompareModes:$('#groupCompareModes'), groupStateButtons:$('#groupStateButtons'), groupSliderControl:$('#groupSliderControl'), groupCompareSlider:$('#groupCompareSlider'), groupSliderOutput:$('#groupSliderOutput'),
     singleStage:$('#singleStage'), singleLayer:$('#singleLayer'), singleImage:$('#singleImage'),
-    compareStage:$('#compareStage'), compareLayer:$('#compareLayer'), compareOriginal:$('#compareOriginal'), compareRestored:$('#compareRestored'), compareRealistic:$('#compareRealistic'), compareReveal:$('#compareReveal'), compareRealisticReveal:$('#compareRealisticReveal'), compareDivider:$('#compareDivider'),
+    compareStage:$('#compareStage'), compareLayer:$('#compareLayer'), compareOriginal:$('#compareOriginal'), compareRestored:$('#compareRestored'), compareReveal:$('#compareReveal'), compareDivider:$('#compareDivider'),
     compareSlider:$('#compareSlider'), fadeSlider:$('#fadeSlider'), sliderControl:$('#sliderControl'), fadeControl:$('#fadeControl'), compareStateButtons:$('#compareStateButtons'),
     slideshowControls:$('#slideshowControls'), slideshowStage:$('#slideshowStage'), slideshowLayer:$('#slideshowLayer'), slideshowImageA:$('#slideshowImageA'), slideshowImageB:$('#slideshowImageB'), slideEffectModes:$('#slideEffectModes'), slidePersonLabel:$('#slidePersonLabel'), slideStateBadge:$('#slideStateBadge'), slideCounter:$('#slideCounter'), slidePlayBtn:$('#slidePlayBtn'),
     threeDStage:$('#threeDStage'), mediaComingSoonPerson:$('#mediaComingSoonPerson'), missingOverlay:$('#missingOverlay'), missingTitle:$('#missingTitle'), missingPath:$('#missingPath'),
@@ -25,7 +25,7 @@
   let view={scale:1,x:0,y:0}, drag=null, compareDividerDrag=null, groupDividerDrag=null, quickDividerDrag=null, compareState='before';
   let exhibitionView='grid', exhibitionIndex=0, exhibitionCameraAngle=0, exhibitionQuickView='compare';
   let exhibitionSwipeStartX=null, exhibitionSwipeStartAngle=0, exhibitionRotationDrag=false, exhibitionSwipeMoved=false;
-  let groupStart=1, groupState='before', groupCompareMode='toggle', groupSliderValue=25;
+  let groupStart=1, groupState='before', groupCompareMode='toggle', groupSliderValue=50;
   let slideIndex=0, slideTimer=null, slideshowPlaying=false, slideEffect='dissolve', activeSlideImg=0, slideTransitioning=false;
 
   function usesSmartphoneLayout(){
@@ -145,7 +145,7 @@
     const scale=Math.min(maxWidth/naturalWidth,maxHeight/naturalHeight);
     const width=naturalWidth*scale;
     const height=naturalHeight*scale;
-    [el.compareOriginal,el.compareRestored,el.compareRealistic].forEach(image=>{
+    [el.compareOriginal,el.compareRestored].forEach(image=>{
       image.style.width=`${width}px`;
       image.style.height=`${height}px`;
     });
@@ -269,11 +269,9 @@
 
   function updateGroupState(){
     const sliderMode=groupCompareMode==='slider';
-    const transition=getThreeStageTransition(groupSliderValue);
+    const transition=getCompareTransition(groupSliderValue);
     el.groupStage.classList.toggle('show-after',!sliderMode && groupState==='after');
-    el.groupStage.classList.toggle('show-realistic',!sliderMode && groupState==='realistic');
     el.groupStage.classList.toggle('slider-mode',sliderMode);
-    el.groupStage.classList.toggle('slider-after-realistic',sliderMode && groupSliderValue>50);
     el.groupStage.classList.toggle('group-at-start',transition.progress===0);
     el.groupStage.classList.toggle('group-at-end',transition.progress===100);
     el.groupStage.style.setProperty('--group-compare-position',`${transition.progress}%`);
@@ -281,7 +279,7 @@
     $$('#groupRangeButtons button').forEach(b=>b.classList.toggle('active',+b.dataset.groupStart===groupStart));
     $$('#groupCompareModes button').forEach(b=>b.classList.toggle('active',b.dataset.groupMode===groupCompareMode));
     $$('#groupStateButtons button').forEach(b=>{
-      const stageValue={before:0,after:50,realistic:100}[b.dataset.groupState];
+      const stageValue={before:0,after:100}[b.dataset.groupState];
       b.classList.toggle('active',sliderMode?Math.abs(groupSliderValue-stageValue)<.01:b.dataset.groupState===groupState);
     });
     el.groupStateButtons.classList.remove('hidden');
@@ -294,7 +292,7 @@
     });
     el.imageTypeLabel.textContent=sliderMode
       ?`グループ比較　${transition.label}`
-      :`グループ比較　${groupState==='realistic'?'Realistic（写実肖像）':groupState==='after'?'After（修復済み）':'Before（現存肖像）'}`;
+      :`グループ比較　${groupState==='after'?'After（修復済み）':'Before（現存肖像）'}`;
   }
 
   function showGroupCompare(){
@@ -325,12 +323,6 @@
       restored.alt=`${p.name} 修復済み肖像`;
       restored.draggable=false;
 
-      const realistic=document.createElement('img');
-      realistic.className='group-image group-realistic';
-      realistic.src=(p.realistic || p.restoredThumb)+'?v=18';
-      realistic.alt=p.realistic?`${p.name} 写実肖像`:`${p.name} 写実肖像準備中`;
-      realistic.draggable=false;
-
       const divider=document.createElement('span');
       divider.className='group-divider';
       divider.setAttribute('role','slider');
@@ -345,7 +337,7 @@
       caption.className='group-caption';
       caption.innerHTML=`<span class="group-role">${p.id}</span><span><strong>${p.name}</strong><small>${p.reading}</small></span>`;
 
-      media.append(original,restored,realistic,divider);
+      media.append(original,restored,divider);
       card.append(media,caption);
       card.onclick=()=>{
         person=p;
@@ -411,23 +403,13 @@
     const done=()=>{
       ok++;
       if(ok===2){
-        if(!comparisonNeedsRealistic())setMissing(false);
+        setMissing(false);
         requestAnimationFrame(lockCompareGeometry);
       }
     };
     const fail=p=>{failed.push(p);setMissing(true,failed.join(' / '),'比較画像未配置')};
     loadImg(el.compareOriginal,person.original,done,fail);
     loadImg(el.compareRestored,person.restored,done,fail);
-    if(person.realistic){
-      loadImg(
-        el.compareRealistic,
-        person.realistic,
-        ()=>{if(comparisonNeedsRealistic())setMissing(false)},
-        p=>{if(comparisonNeedsRealistic())setMissing(true,p,'写実肖像未配置')}
-      );
-    } else {
-      el.compareRealistic.removeAttribute('src');
-    }
     updateCompareEffect();
     applyView();
   }
@@ -599,12 +581,11 @@
     el.zoomLabel.textContent=Math.round(view.scale*100)+'%';
     el.compareOriginal.style.transform='translate(-50%,-50%)';
     el.compareRestored.style.transform='translate(-50%,-50%)';
-    el.compareRealistic.style.transform='translate(-50%,-50%)';
   }
 
   function updateCompareStateButtons(){
     $$('#compareStateButtons button').forEach(button=>{
-      const stageValue={before:0,after:50,realistic:100}[button.dataset.state];
+      const stageValue={before:0,after:100}[button.dataset.state];
       const directValue=compareMode==='fade'?+el.fadeSlider.value:+el.compareSlider.value;
       const active=(compareMode==='toggle' && button.dataset.state===compareState)
         || ((compareMode==='slider' || compareMode==='fade') && Math.abs(directValue-stageValue)<.01);
@@ -613,38 +594,20 @@
     });
   }
 
-  function comparisonNeedsRealistic(){
-    if(compareMode==='toggle')return compareState==='realistic';
-    const value=compareMode==='slider'?+el.compareSlider.value:+el.fadeSlider.value;
-    return value>50;
-  }
-
   function showCompareBase(base){
     el.compareOriginal.style.opacity=base==='before'?1:0;
     el.compareReveal.style.opacity=base==='after'?1:0;
-    el.compareRealisticReveal.style.opacity=base==='realistic'?1:0;
   }
 
-  function showCompareOverlay(overlay,opacity,clipPath){
-    const layer=overlay==='after'?el.compareReveal:el.compareRealisticReveal;
-    layer.style.opacity=opacity;
-    layer.style.clipPath=clipPath;
+  function showCompareOverlay(opacity,clipPath){
+    el.compareReveal.style.opacity=opacity;
+    el.compareReveal.style.clipPath=clipPath;
   }
 
-  function getThreeStageTransition(value){
-    if(value<=50){
-      return {
-        base:'before',
-        overlay:'after',
-        progress:value*2,
-        label:value===0?'Before（現存肖像）':value===50?'After（修復済み）':'Before / After'
-      };
-    }
+  function getCompareTransition(value){
     return {
-      base:'after',
-      overlay:'realistic',
-      progress:(value-50)*2,
-      label:value===100?'Realistic（写実肖像）':'After / Realistic'
+      progress:value,
+      label:value===0?'Before（現存肖像）':value===100?'After（修復済み）':'Before / After'
     };
   }
 
@@ -664,16 +627,13 @@
     el.compareDivider.classList.toggle('hidden',compareMode!=='slider' && compareMode!=='fade');
     el.compareOriginal.style.opacity=0;
     el.compareReveal.style.opacity=0;
-    el.compareRealisticReveal.style.opacity=0;
     el.compareReveal.style.clipPath='inset(0)';
-    el.compareRealisticReveal.style.clipPath='inset(0)';
     updateCompareStateButtons();
     if(compareMode==='slider'){
-      setMissing(comparisonNeedsRealistic() && !person.realistic,'','写実肖像は準備中です');
       const v=+el.compareSlider.value;
-      const transition=getThreeStageTransition(v);
-      showCompareBase(transition.base);
-      showCompareOverlay(transition.overlay,1,`inset(0 ${100-transition.progress}% 0 0)`);
+      const transition=getCompareTransition(v);
+      showCompareBase('before');
+      showCompareOverlay(1,`inset(0 ${100-transition.progress}% 0 0)`);
       el.compareDivider.style.left=transition.progress+'%';
       el.compareDivider.classList.toggle('at-start',transition.progress===0);
       el.compareDivider.classList.toggle('at-end',transition.progress===100);
@@ -681,10 +641,9 @@
       el.compareDivider.setAttribute('aria-valuetext',transition.label);
       el.imageTypeLabel.textContent=transition.label.includes(' / ')?`${transition.label} 比較`:transition.label;
     } else if(compareMode==='fade'){
-      setMissing(comparisonNeedsRealistic() && !person.realistic,'','写実肖像は準備中です');
-      const transition=getThreeStageTransition(+el.fadeSlider.value);
-      showCompareBase(transition.base);
-      showCompareOverlay(transition.overlay,transition.progress/100,'inset(0)');
+      const transition=getCompareTransition(+el.fadeSlider.value);
+      showCompareBase('before');
+      showCompareOverlay(transition.progress/100,'inset(0)');
       el.compareDivider.style.left=transition.progress+'%';
       el.compareDivider.classList.toggle('at-start',transition.progress===0);
       el.compareDivider.classList.toggle('at-end',transition.progress===100);
@@ -693,13 +652,7 @@
       el.imageTypeLabel.textContent=transition.label.includes(' / ')?`${transition.label} クロスフェード`:transition.label;
     } else {
       showCompareBase(compareState);
-      if(compareState==='realistic'){
-        el.imageTypeLabel.textContent='Realistic（写実肖像）';
-        setMissing(!person.realistic,'','写実肖像は準備中です');
-      } else {
-        setMissing(false);
-        el.imageTypeLabel.textContent=compareState==='after'?'After（修復済み）':'Before（現存肖像）';
-      }
+      el.imageTypeLabel.textContent=compareState==='after'?'After（修復済み）':'Before（現存肖像）';
     }
   }
 
@@ -785,18 +738,15 @@
       const rect=el.compareLayer.getBoundingClientRect();
       if(!rect.width)return;
       const position=Math.max(0,Math.min(100,((e.clientX-rect.left)/rect.width)*100));
-      const stage=compareDividerDrag?.stage || 0;
-      const value=(stage*50)+(position/2);
       const input=compareDividerDrag?.mode==='fade'?el.fadeSlider:el.compareSlider;
-      input.value=value.toFixed(1);
+      input.value=position.toFixed(1);
       updateCompareEffect();
     };
     el.compareDivider.addEventListener('pointerdown',e=>{
       if(mode!=='compare' || (compareMode!=='slider' && compareMode!=='fade'))return;
       e.preventDefault();
       e.stopPropagation();
-      const input=compareMode==='fade'?el.fadeSlider:el.compareSlider;
-      compareDividerDrag={pointerId:e.pointerId,stage:+input.value>50?1:0,mode:compareMode};
+      compareDividerDrag={pointerId:e.pointerId,mode:compareMode};
       el.compareDivider.classList.add('is-dragging');
       el.compareDivider.setPointerCapture(e.pointerId);
       setCompareSliderFromPointer(e);
@@ -837,7 +787,7 @@
       compareState=b.dataset.state;
       if(compareMode==='slider' || compareMode==='fade'){
         const input=compareMode==='fade'?el.fadeSlider:el.compareSlider;
-        input.value=String({before:0,after:50,realistic:100}[compareState]);
+        input.value=String({before:0,after:100}[compareState]);
         updateCompareEffect();
         return;
       }
@@ -863,7 +813,7 @@
     $$('#groupStateButtons button').forEach(b=>b.onclick=()=>{
       groupState=b.dataset.groupState;
       if(groupCompareMode==='slider'){
-        groupSliderValue={before:0,after:50,realistic:100}[groupState];
+        groupSliderValue={before:0,after:100}[groupState];
       }
       updateGroupState();
     });
@@ -875,7 +825,7 @@
       const rect=groupDividerDrag?.media?.getBoundingClientRect();
       if(!rect?.width)return;
       const position=Math.max(0,Math.min(100,((e.clientX-rect.left)/rect.width)*100));
-      groupSliderValue=(groupDividerDrag.stage*50)+(position/2);
+      groupSliderValue=position;
       updateGroupState();
     };
     el.groupGrid.addEventListener('pointerdown',e=>{
@@ -883,7 +833,7 @@
       if(!divider || groupCompareMode!=='slider')return;
       e.preventDefault();
       e.stopPropagation();
-      groupDividerDrag={pointerId:e.pointerId,stage:groupSliderValue>50?1:0,divider,media:divider.closest('.group-media')};
+      groupDividerDrag={pointerId:e.pointerId,divider,media:divider.closest('.group-media')};
       divider.classList.add('is-dragging');
       divider.setPointerCapture(e.pointerId);
       setGroupSliderFromPointer(e);

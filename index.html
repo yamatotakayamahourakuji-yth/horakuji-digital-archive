@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="color-scheme" content="dark">
   <title>法楽寺 真言宗密教の八祖 DIGITAL ARCHIVE</title>
-  <link rel="stylesheet" href="css/style.css?v=53">
+  <link rel="stylesheet" href="css/style.css?v=54">
 </head>
 <body>
 <div id="openingScreen" class="opening-screen" aria-label="オープニング">
@@ -55,28 +55,27 @@
         <div id="statusBadge" class="status"></div>
       </div>
 
-      <!-- 比較タブ・比較方式・3段階切替を同じ行に配置 -->
+      <!-- 比較タブ・比較方式・修復前後の切替を同じ行に配置 -->
       <div class="mode-row">
         <nav id="modeTabs" class="tabs" aria-label="表示モード"></nav>
         <div id="compareModeInline" class="compare-modes inline-compare" role="group" aria-label="比較方法">
           <button data-compare="slider" class="active">左右スライダー</button>
           <button data-compare="fade">クロスフェード</button>
-          <div id="compareStateButtons" class="compare-state-buttons" role="group" aria-label="肖像の3段階切替">
+          <div id="compareStateButtons" class="compare-state-buttons" role="group" aria-label="肖像の修復前後切替">
             <button data-state="before">Before</button>
             <button data-state="after">After</button>
-            <button data-state="realistic">Realistic</button>
           </div>
         </div>
       </div>
 
       <div id="compareEffectRow" class="compare-effect-row">
         <div id="sliderControl" class="direct-slider-instruction">
-          <span aria-hidden="true">⇔</span> 縦線を直接ドラッグ（3段階は上のボタンで切替）
-          <input id="compareSlider" class="visually-hidden" type="range" min="0" max="100" step="0.1" value="25" tabindex="-1" aria-hidden="true">
+          <span aria-hidden="true">⇔</span> 縦線を直接ドラッグして修復前後を比較
+          <input id="compareSlider" class="visually-hidden" type="range" min="0" max="100" step="0.1" value="50" tabindex="-1" aria-hidden="true">
         </div>
         <div id="fadeControl" class="direct-slider-instruction hidden">
           <span aria-hidden="true">⇔</span> 縦線を直接ドラッグして透明度を調整
-          <input id="fadeSlider" class="visually-hidden" type="range" min="0" max="100" step="0.1" value="25" tabindex="-1" aria-hidden="true">
+          <input id="fadeSlider" class="visually-hidden" type="range" min="0" max="100" step="0.1" value="50" tabindex="-1" aria-hidden="true">
         </div>
       </div>
 
@@ -163,15 +162,14 @@
                       <button data-group-mode="slider">一括スライダー</button>
                     </div>
                     <div class="group-effect-row">
-                      <div id="groupStateButtons" class="group-button-set" role="group" aria-label="肖像の3段階切替">
+                      <div id="groupStateButtons" class="group-button-set" role="group" aria-label="肖像の修復前後切替">
                         <button data-group-state="before" class="active">Before</button>
                         <button data-group-state="after">After</button>
-                        <button data-group-state="realistic">Realistic</button>
                       </div>
                       <div id="groupSliderControl" class="direct-slider-instruction group-direct-instruction hidden">
                         <span aria-hidden="true">⇔</span> いずれかの肖像の縦線を動かすと、全肖像へ一括反映
-                        <output id="groupSliderOutput" class="visually-hidden">0%</output>
-                        <input id="groupCompareSlider" class="visually-hidden" type="range" min="0" max="100" step="0.1" value="25" tabindex="-1" aria-hidden="true">
+                        <output id="groupSliderOutput" class="visually-hidden">50%</output>
+                        <input id="groupCompareSlider" class="visually-hidden" type="range" min="0" max="100" step="0.1" value="50" tabindex="-1" aria-hidden="true">
                       </div>
                     </div>
                   </div>
@@ -194,9 +192,6 @@
               <img id="compareOriginal" class="compare-img original" draggable="false" alt="現存肖像">
               <div id="compareReveal" class="reveal-wrap">
                 <img id="compareRestored" class="compare-img restored" draggable="false" alt="修復済み">
-              </div>
-              <div id="compareRealisticReveal" class="reveal-wrap realistic-reveal">
-                <img id="compareRealistic" class="compare-img realistic" draggable="false" alt="写実肖像">
               </div>
               <div id="compareDivider" class="compare-divider" role="slider" tabindex="0" aria-label="比較位置" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
                 <span class="compare-divider-handle" aria-hidden="true">⇔</span>
@@ -281,7 +276,7 @@
       <li>左側から八祖を選択します。</li>
       <li>「展示室」では額装された八祖の肖像を一覧し、人物を選ぶとその比較画面へ移動します。</li>
       <li>展示室の「立体展示」では、左右の肖像を選ぶか、PCは左右ドラッグ、スマホは左右スワイプで祖師を移動します。中央の肖像を選ぶと比較・解説の簡易パネルが開きます。</li>
-      <li>「グループ比較」では、PCは4人ずつ、スマホは2人ずつ、Before／After／Realisticを一括切替または共通スライダーで比較します。</li>
+      <li>「グループ比較」では、PCは4人ずつ、スマホは2人ずつ、Before／Afterを一括切替または共通の縦線で比較します。</li>
       <li>「比較」の右側に「左右スライダー」「クロスフェード」「Before / After」が並びます。</li>
       <li>「Before / After」では、ボタン内の色付き表示で現在がBeforeかAfterか分かります。</li>
       <li>「スライドショー」は、1～8を「Before→After」の順で全16コマを一巡し、8 Afterで自動終了します。表示倍率は比較画面と同じです。</li>
@@ -290,13 +285,13 @@
       <li>「左右スライダー」表示中は比較画像を固定しています。画像上を左ドラッグしても移動しません。</li>
       <li>それ以外の画像はドラッグで移動、ホイールまたは＋／−で拡大縮小できます。</li>
       <li>「解説」では専用の解説画像を表示します。</li>
-      <li>「比較」のBefore／After／Realisticで、現存肖像・修復済み肖像・写実肖像を切り替えます。</li>
-      <li>左右スライダーとクロスフェードは、左端がBefore、中央がAfter、右端がRealisticです。</li>
+      <li>「比較」のBefore／Afterで、現存肖像・修復済み肖像を切り替えます。</li>
+      <li>左右スライダーとクロスフェードでは、肖像上の縦線＋⇔を直接ドラッグします。左端がBefore、右端がAfterです。</li>
     </ul>
   </div>
 </div>
 
-<script src="js/data.js?v=19"></script>
-<script src="js/viewer.js?v=53"></script>
+<script src="js/data.js?v=20"></script>
+<script src="js/viewer.js?v=54"></script>
 </body>
 </html>

@@ -27,7 +27,6 @@ const HACHISO = [
   restored:`images/restored/${p.id}_最終_web.webp`,
   restoredThumb:`images/restored/${p.id}_最終_thumb.webp`,
   explanation:`images/explanation/${p.id}_解説_web.webp`,
-  realistic:`images/realistic/${p.id}_リアル.png`,
   // 3D・映像は八祖全員を再制作中。公開準備が整うまで読み込まない。
   threeD:"",
   video:""

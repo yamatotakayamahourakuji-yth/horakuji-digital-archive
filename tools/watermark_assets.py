@@ -66,8 +66,8 @@ def asset_info(path: Path) -> tuple[int, str, str]:
         kind, code = "ORIGINAL", "O"
     elif folder == "restored":
         kind, code = "RESTORED", "R"
-    elif folder == "realistic":
-        kind, code = "REALISTIC-AI", "A"
+    elif folder == "explanation":
+        kind, code = "EXPLANATION", "E"
     else:
         raise ValueError(f"対象外フォルダです: {path}")
     derivative = "THUMB" if "_thumb" in path.stem else "WEB" if "_web" in path.stem else "MASTER-PUBLIC"
@@ -75,7 +75,7 @@ def asset_info(path: Path) -> tuple[int, str, str]:
 
 
 def compact_payload(number: int, kind: str) -> bytes:
-    kind_code = {"ORIGINAL": 1, "RESTORED": 2, "REALISTIC-AI": 3}[kind]
+    kind_code = {"ORIGINAL": 1, "RESTORED": 2, "EXPLANATION": 3}[kind]
     body = MAGIC + bytes((1, number, kind_code)) + struct.pack(">H", 2026)
     return body + struct.pack(">I", zlib.crc32(body) & 0xFFFFFFFF)
 
@@ -186,7 +186,7 @@ def save_with_metadata(image: Image.Image, destination: Path, asset_id: str, kin
 
 def target_files() -> list[Path]:
     files: list[Path] = []
-    for folder in ("original", "restored", "realistic"):
+    for folder in ("original", "restored", "explanation"):
         for path in sorted((ROOT / "images" / folder).iterdir()):
             if path.suffix.lower() in {".jpg", ".jpeg", ".png", ".webp"}:
                 files.append(path)
@@ -278,7 +278,7 @@ def verify_all(key_path: Path, manifest_path: Path) -> None:
     expected_files = target_files()
     expected_paths = {path.relative_to(ROOT).as_posix() for path in expected_files}
     listed_paths: list[str] = []
-    allowed_roots = tuple((ROOT / "images" / folder).resolve() for folder in ("original", "restored", "realistic"))
+    allowed_roots = tuple((ROOT / "images" / folder).resolve() for folder in ("original", "restored", "explanation"))
     for record in records:
         if not isinstance(record, dict) or not isinstance(record.get("path"), str):
             raise ValueError("台帳の各レコードには文字列のpathが必要です")

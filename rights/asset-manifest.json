@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generated": "2026-09-17",
+  "generated": "2026-09-19",
   "owner": "© 2026 大和高山 法楽寺",
   "rightsUsageTerms": "掲載している文章・写真・肖像画像の無断転載、複製、改変および再配布を禁じます。",
   "watermark": "keyed repeated 8x8 DCT-QIM; detector key retained offline",
@@ -727,123 +727,123 @@
       "copyright": "© 2026 大和高山 法楽寺"
     },
     {
-      "path": "images/realistic/1_リアル.png",
-      "assetId": "01A-MASTER-PUBLIC",
+      "path": "images/explanation/1_解説_web.webp",
+      "assetId": "01E-WEB",
       "portraitNo": 1,
-      "category": "REALISTIC-AI",
+      "category": "EXPLANATION",
       "dimensions": [
-        1055,
-        1491
+        1600,
+        2262
       ],
       "dctRepeat": 64,
-      "detectionConfidence": 1.0,
-      "sourceSha256": "5c2a3c55aa1fa372c97a31664aab3e1cdc5ec88445742556a78c7cb6cc71c2ac",
-      "publishedSha256": "a8e74efd1a730618d16c538680b2240f984015f0ebb572c0b46c518479a7c317",
+      "detectionConfidence": 0.9994,
+      "sourceSha256": "121535b118f36e7d1a07e322939f5c38c49a6ca0b79152a1bbbe429399eef856",
+      "publishedSha256": "26dbbbd9b50cdd34b8ad64220d1a5a6d7ff37b882645a661d75340e4a574d0a3",
       "copyright": "© 2026 大和高山 法楽寺"
     },
     {
-      "path": "images/realistic/2_リアル.png",
-      "assetId": "02A-MASTER-PUBLIC",
+      "path": "images/explanation/2_解説_web.webp",
+      "assetId": "02E-WEB",
       "portraitNo": 2,
-      "category": "REALISTIC-AI",
+      "category": "EXPLANATION",
       "dimensions": [
-        1055,
-        1491
+        1600,
+        2262
       ],
       "dctRepeat": 64,
-      "detectionConfidence": 1.0,
-      "sourceSha256": "d82c752693791e9e80c63dab701431212e4bbd9ee36b327446e4f64a5319e458",
-      "publishedSha256": "3181a0f0bb1587f0d12a7a179746a29e433d23de655595ab15e6ad4475cb94f8",
+      "detectionConfidence": 0.9994,
+      "sourceSha256": "93ca58d014a1cd03ac5c9aa26a752443ca85b3ed9586e89ad30c7e89c54105d6",
+      "publishedSha256": "33d8194c9bf4918b977e65d809f1a3939efd2e265b9565e2e05edd2ee35d0a4b",
       "copyright": "© 2026 大和高山 法楽寺"
     },
     {
-      "path": "images/realistic/3_リアル.png",
-      "assetId": "03A-MASTER-PUBLIC",
+      "path": "images/explanation/3_解説_web.webp",
+      "assetId": "03E-WEB",
       "portraitNo": 3,
-      "category": "REALISTIC-AI",
+      "category": "EXPLANATION",
       "dimensions": [
-        1055,
-        1491
+        1600,
+        2262
       ],
       "dctRepeat": 64,
-      "detectionConfidence": 1.0,
-      "sourceSha256": "85d30f807fad2873144fda4eee639005e7ddf1b78b1b81c4df5da6aba033077e",
-      "publishedSha256": "0f63bc936eb890b39de0c3d6a7f1613b97f9049c0f804c9f0bbccde10e9a2ed9",
+      "detectionConfidence": 0.9989,
+      "sourceSha256": "cc2c95317d63029748c11cafb45a715299f59f602fc42c9a980f48349b1dd5bb",
+      "publishedSha256": "a8c4dd2a404b301d4da90117a4438524e8b89bd637a362299668e8ebe6be8c7c",
       "copyright": "© 2026 大和高山 法楽寺"
     },
     {
-      "path": "images/realistic/4_リアル.png",
-      "assetId": "04A-MASTER-PUBLIC",
+      "path": "images/explanation/4_解説_web.webp",
+      "assetId": "04E-WEB",
       "portraitNo": 4,
-      "category": "REALISTIC-AI",
+      "category": "EXPLANATION",
       "dimensions": [
-        1055,
-        1491
+        1600,
+        2262
       ],
       "dctRepeat": 64,
-      "detectionConfidence": 1.0,
-      "sourceSha256": "3d65acd5f9d89f9a77f9a099d2f3917e4aa1906f49dbd5a7b1cfdea3c5d3152e",
-      "publishedSha256": "c6ff6e8e7d6299ae4196f7ff7cb5ab4462032bb9104760af93980bf37ad472e9",
+      "detectionConfidence": 0.9992,
+      "sourceSha256": "977521ef3515f97372374aff3792bf3b6facf98824188d0ee37cbe5ef974396a",
+      "publishedSha256": "81ae8d52eb9ea141a0b9de323ba85728cdc148e85f8c0d17a75b8a382eda7711",
       "copyright": "© 2026 大和高山 法楽寺"
     },
     {
-      "path": "images/realistic/5_リアル.png",
-      "assetId": "05A-MASTER-PUBLIC",
+      "path": "images/explanation/5_解説_web.webp",
+      "assetId": "05E-WEB",
       "portraitNo": 5,
-      "category": "REALISTIC-AI",
+      "category": "EXPLANATION",
       "dimensions": [
-        1055,
-        1491
+        1600,
+        2262
       ],
       "dctRepeat": 64,
-      "detectionConfidence": 1.0,
-      "sourceSha256": "86c81b6d4cff56efd28fc7fd0d5d18bd3e85e6265df390c64dcc4cf4548bf2a6",
-      "publishedSha256": "e8a7b9fa15ad96ef8fab0fbe9978b4abb556ad7f533ddc5fca9bfea1c9594f4a",
+      "detectionConfidence": 0.9988,
+      "sourceSha256": "4dc51b850013f052ba3802a5987a946846ec60317cb8866d95a6ac31327eb251",
+      "publishedSha256": "8df1a0fcc496c1e4dd02853738aeedbef93da656e708ea26a2bfabad0837206f",
       "copyright": "© 2026 大和高山 法楽寺"
     },
     {
-      "path": "images/realistic/6_リアル.png",
-      "assetId": "06A-MASTER-PUBLIC",
+      "path": "images/explanation/6_解説_web.webp",
+      "assetId": "06E-WEB",
       "portraitNo": 6,
-      "category": "REALISTIC-AI",
+      "category": "EXPLANATION",
       "dimensions": [
-        1055,
-        1491
+        1600,
+        2262
       ],
       "dctRepeat": 64,
-      "detectionConfidence": 1.0,
-      "sourceSha256": "dfbd613d71696aad0cd03f063032ea513b56b201024ff08de3f727ab7385ad77",
-      "publishedSha256": "6fa88ef37b060df250f2da1a74c79bbc7608d1be075645617807cdeecd5f1459",
+      "detectionConfidence": 0.9992,
+      "sourceSha256": "bbae7a74f30ea354b04f0849cf7e2819baf049631d3e41c2f7cb5da830136c6a",
+      "publishedSha256": "c48b49c417efd5072442c48d607ed799d84be282d7ed4fe33055b00de5357fd7",
       "copyright": "© 2026 大和高山 法楽寺"
     },
     {
-      "path": "images/realistic/7_リアル.png",
-      "assetId": "07A-MASTER-PUBLIC",
+      "path": "images/explanation/7_解説_web.webp",
+      "assetId": "07E-WEB",
       "portraitNo": 7,
-      "category": "REALISTIC-AI",
+      "category": "EXPLANATION",
       "dimensions": [
-        1055,
-        1491
+        1600,
+        2262
       ],
       "dctRepeat": 64,
-      "detectionConfidence": 1.0,
-      "sourceSha256": "b7bceca70c3397a44226440b9d7183e878c2050852ebb25b66a0a1ffcc9fc880",
-      "publishedSha256": "aa0e44d399fc466db590704b7d73ea26650d51633b721d32309622aafb8a89b5",
+      "detectionConfidence": 0.9991,
+      "sourceSha256": "34cf94592548bd772f87ff85c49727fcdf1cae37807b0321fbd409a6af58fab0",
+      "publishedSha256": "03147ce262373b7cf7065e6c0ee1b823fafa7e0993086d9e1582f49abe0c19df",
       "copyright": "© 2026 大和高山 法楽寺"
     },
     {
-      "path": "images/realistic/8_リアル.png",
-      "assetId": "08A-MASTER-PUBLIC",
+      "path": "images/explanation/8_解説_web.webp",
+      "assetId": "08E-WEB",
       "portraitNo": 8,
-      "category": "REALISTIC-AI",
+      "category": "EXPLANATION",
       "dimensions": [
-        1055,
-        1491
+        1600,
+        2262
       ],
       "dctRepeat": 64,
-      "detectionConfidence": 1.0,
-      "sourceSha256": "d77fe7046a9ef6c0a73417cd327073414b587ca4781ae9278c6bac282198eb3b",
-      "publishedSha256": "3bc1a74eabf18eaefffe9410d6bf61abd1da27e9767e17f608f02bf4b1f04ecc",
+      "detectionConfidence": 0.9983,
+      "sourceSha256": "f3b270a1b851b43e92ace232c9de75f7b17f8f9795f835ff0c99474ba54938db",
+      "publishedSha256": "da42053dfab1b6051dcd19c5ff767cdefad455390291c4fcb89677fe2b6a4276",
       "copyright": "© 2026 大和高山 法楽寺"
     }
   ]
