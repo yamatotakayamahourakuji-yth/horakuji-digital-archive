@@ -293,5 +293,47 @@
 
 <script src="js/data.js?v=20"></script>
 <script src="js/viewer.js?v=54"></script>
+  
+<script>
+(function () {
+  'use strict';
+
+  const endpoint = 'https://script.google.com/macros/s/AKfycbyOABbtzt0A7VcBPNnkjuF_ebw1YCqtq367fzJmKT89aIClYHVo_Q--Jt5FoBENK2aL/exec';
+  const sessionKey = 'horakuji_archive_visit_v1';
+
+  try {
+    if (sessionStorage.getItem(sessionKey)) return;
+  } catch (error) {
+    console.warn('セッションの確認に失敗しました', error);
+  }
+
+  const eventId = crypto.randomUUID();
+
+  try {
+    sessionStorage.setItem(sessionKey, eventId);
+  } catch (error) {
+    console.warn('セッションの保存に失敗しました', error);
+  }
+
+  fetch(endpoint, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: {
+      'Content-Type': 'text/plain;charset=utf-8'
+    },
+    body: JSON.stringify({
+      type: 'archive_visit',
+      eventId: eventId
+    }),
+    keepalive: true
+  }).catch(function (error) {
+    console.warn('アーカイブ訪問記録の送信に失敗しました', error);
+    try {
+      sessionStorage.removeItem(sessionKey);
+    } catch (_) {}
+  });
+})();
+</script>
+
 </body>
 </html>
