@@ -675,7 +675,7 @@ button,input{font:inherit}button{cursor:pointer;color:var(--text);background:#22
 .group-stage.show-after .group-restored{opacity:1}
 .group-stage.slider-mode .group-restored{
   opacity:1;
-  clip-path:inset(0 var(--group-overlay-hidden) 0 0);
+  clip-path:inset(0 0 0 var(--group-overlay-hidden));
   transition:none;
 }
 .group-divider{
@@ -854,8 +854,8 @@ button,input{font:inherit}button{cursor:pointer;color:var(--text);background:#22
 .exhibition-quick-modes button.active{border-color:#c9a84f;background:#9d7e32;color:#fff7dc}
 .exhibition-quick-compare{position:relative;height:min(60vh,610px);overflow:hidden;border:1px solid #806a4166;border-radius:9px;background:#09090a}
 .exhibition-quick-compare>img,.exhibition-quick-reveal img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
-.exhibition-quick-reveal{position:absolute;inset:0 auto 0 0;width:var(--quick-position,50%);overflow:hidden}
-.exhibition-quick-reveal img{width:min(718px,calc(100vw - 80px));max-width:none}
+.exhibition-quick-reveal{position:absolute;inset:0;overflow:hidden;clip-path:inset(0 0 0 var(--quick-position,50%))}
+.exhibition-quick-reveal img{width:100%;max-width:none}
 .exhibition-quick-divider{position:absolute;z-index:3;top:0;bottom:0;left:var(--quick-position,50%);width:3px;transform:translateX(-1.5px);background:linear-gradient(180deg,#fff7d2,var(--gold) 45%,#fff7d2);box-shadow:0 0 0 1px #0007,0 0 8px #000;cursor:ew-resize;touch-action:none;outline:none}
 .exhibition-quick-divider::before{content:"";position:absolute;top:0;bottom:0;left:50%;width:44px;transform:translateX(-50%)}
 .exhibition-quick-divider>span{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:grid;place-items:center;width:48px;height:36px;border:2px solid #fff7dc;border-radius:13px;background:linear-gradient(145deg,#9b7a32,#5f481d);box-shadow:0 4px 14px #000b;color:#fffaf0;font-family:ui-sans-serif,system-ui,sans-serif;font-size:20px;font-weight:700;line-height:1}
@@ -1012,5 +1012,5 @@ body.compare-view-active .toolbar-left{display:flex}
   .exhibition-quick-compare{height:52vh}
   .exhibition-quick-explanation{height:52vh}
   .exhibition-quick-media{height:52vh}
-  .exhibition-quick-reveal img{width:calc(100vw - 68px)}
+  .exhibition-quick-reveal img{width:100%}
 }
