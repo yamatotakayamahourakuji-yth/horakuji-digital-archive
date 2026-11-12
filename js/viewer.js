@@ -272,9 +272,9 @@
     const transition=getCompareTransition(groupSliderValue);
     el.groupStage.classList.toggle('show-after',!sliderMode && groupState==='after');
     el.groupStage.classList.toggle('slider-mode',sliderMode);
-    el.groupStage.classList.toggle('group-at-start',transition.progress===0);
-    el.groupStage.classList.toggle('group-at-end',transition.progress===100);
-    el.groupStage.style.setProperty('--group-compare-position',`${transition.progress}%`);
+    el.groupStage.classList.toggle('group-at-start',transition.position===0);
+    el.groupStage.classList.toggle('group-at-end',transition.position===100);
+    el.groupStage.style.setProperty('--group-compare-position',`${transition.position}%`);
     el.groupStage.style.setProperty('--group-overlay-hidden',`${100-transition.progress}%`);
     $$('#groupRangeButtons button').forEach(b=>b.classList.toggle('active',+b.dataset.groupStart===groupStart));
     $$('#groupCompareModes button').forEach(b=>b.classList.toggle('active',b.dataset.groupMode===groupCompareMode));
@@ -287,7 +287,7 @@
     el.groupCompareSlider.value=groupSliderValue;
     el.groupSliderOutput.textContent=`${groupSliderValue}%`;
     $$('.group-divider').forEach(divider=>{
-      divider.setAttribute('aria-valuenow',String(groupSliderValue));
+      divider.setAttribute('aria-valuenow',String(transition.position));
       divider.setAttribute('aria-valuetext',transition.label);
     });
     el.imageTypeLabel.textContent=sliderMode
@@ -607,6 +607,8 @@
   function getCompareTransition(value){
     return {
       progress:value,
+      // Before/After values stay unchanged; the divider marks the left Before area.
+      position:100-value,
       label:value===0?'Before（現存肖像）':value===100?'After（修復済み）':'Before / After'
     };
   }
@@ -633,11 +635,11 @@
       const v=+el.compareSlider.value;
       const transition=getCompareTransition(v);
       showCompareBase('before');
-      showCompareOverlay(1,`inset(0 ${100-transition.progress}% 0 0)`);
-      el.compareDivider.style.left=transition.progress+'%';
-      el.compareDivider.classList.toggle('at-start',transition.progress===0);
-      el.compareDivider.classList.toggle('at-end',transition.progress===100);
-      el.compareDivider.setAttribute('aria-valuenow',String(v));
+      showCompareOverlay(1,`inset(0 0 0 ${transition.position}%)`);
+      el.compareDivider.style.left=transition.position+'%';
+      el.compareDivider.classList.toggle('at-start',transition.position===0);
+      el.compareDivider.classList.toggle('at-end',transition.position===100);
+      el.compareDivider.setAttribute('aria-valuenow',String(transition.position));
       el.compareDivider.setAttribute('aria-valuetext',transition.label);
       el.imageTypeLabel.textContent=transition.label.includes(' / ')?`${transition.label} 比較`:transition.label;
     } else if(compareMode==='fade'){
@@ -739,7 +741,7 @@
       if(!rect.width)return;
       const position=Math.max(0,Math.min(100,((e.clientX-rect.left)/rect.width)*100));
       const input=compareDividerDrag?.mode==='fade'?el.fadeSlider:el.compareSlider;
-      input.value=position.toFixed(1);
+      input.value=(compareDividerDrag?.mode==='fade'?position:100-position).toFixed(1);
       updateCompareEffect();
     };
     el.compareDivider.addEventListener('pointerdown',e=>{
@@ -769,10 +771,11 @@
       const step=e.shiftKey?5:1;
       const input=compareMode==='fade'?el.fadeSlider:el.compareSlider;
       let next=+input.value;
-      if(e.key==='ArrowLeft')next-=step;
-      else if(e.key==='ArrowRight')next+=step;
-      else if(e.key==='Home')next=0;
-      else if(e.key==='End')next=100;
+      const direction=compareMode==='slider'?-1:1;
+      if(e.key==='ArrowLeft')next-=step*direction;
+      else if(e.key==='ArrowRight')next+=step*direction;
+      else if(e.key==='Home')next=compareMode==='slider'?100:0;
+      else if(e.key==='End')next=compareMode==='slider'?0:100;
       else return;
       e.preventDefault();
       input.value=String(Math.max(0,Math.min(100,next)));
@@ -825,7 +828,7 @@
       const rect=groupDividerDrag?.media?.getBoundingClientRect();
       if(!rect?.width)return;
       const position=Math.max(0,Math.min(100,((e.clientX-rect.left)/rect.width)*100));
-      groupSliderValue=position;
+      groupSliderValue=100-position;
       updateGroupState();
     };
     el.groupGrid.addEventListener('pointerdown',e=>{
@@ -856,10 +859,10 @@
       if(!e.target.closest('.group-divider') || groupCompareMode!=='slider')return;
       const step=e.shiftKey?5:1;
       let next=groupSliderValue;
-      if(e.key==='ArrowLeft')next-=step;
-      else if(e.key==='ArrowRight')next+=step;
-      else if(e.key==='Home')next=0;
-      else if(e.key==='End')next=100;
+      if(e.key==='ArrowLeft')next+=step;
+      else if(e.key==='ArrowRight')next-=step;
+      else if(e.key==='Home')next=100;
+      else if(e.key==='End')next=0;
       else return;
       e.preventDefault();
       e.stopPropagation();
